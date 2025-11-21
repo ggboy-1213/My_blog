@@ -53,20 +53,11 @@ import { PostCardSkeleton } from '@/components/Skeleton'
 ```tsx
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { ParticlesBackground } from '@/components/Particles'
-import { TiltCard } from '@/components/TiltCard'
 
 // 主题切换
 <ThemeToggle />
 
-// 3D 倾斜卡片
-<TiltCard className="border rounded-lg p-6">
-  <CardContent />
-</TiltCard>
-
-// 视差效果
-<Parallax speed={0.5}>
-  <Content />
-</Parallax>
+// 粒子背景已自动添加到 layout
 ```
 
 ## ♿ 可访问性改进
@@ -98,22 +89,16 @@ import { AccessibleButton } from '@/components/AccessibleButton'
 
 ### 已实现的动效：
 - ✅ **NProgress 进度条**: 页面加载进度指示
-- ✅ **3D Tilt 效果**: 卡片悬停倾斜
-- ✅ **视差滚动**: 平滑的滚动动画
+- ✅ **粒子背景**: Canvas 绘制的交互式粒子效果
 - ✅ **代码块增强**: 行号和高亮
 - ✅ **阅读进度条**: 文章阅读进度
 
 ### 动效 Hooks：
 ```tsx
 import { useReadingProgress } from '@/hooks/use-reading-progress'
-import { useOnScreen } from '@/hooks/use-on-screen'
 
 // 阅读进度
 const progress = useReadingProgress()
-
-// 元素可见性检测
-const ref = useRef<HTMLDivElement>(null)
-const isVisible = useOnScreen(ref)
 ```
 
 ## 📊 性能指标目标

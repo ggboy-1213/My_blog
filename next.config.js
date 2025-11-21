@@ -9,15 +9,15 @@ const withMDX = require('@next/mdx')({
         theme: 'github-dark',
         grid: false,
         keepBackground: false,
-        onVisitLine(node: any) {
+        onVisitLine(node) {
           if (node.children.length === 0) {
             node.children = [{ type: 'text', value: ' ' }]
           }
         },
-        onHighlightLine(node: any) {
+        onHighlightLine(node) {
           node.properties.className.push('highlighted')
         },
-        onHighlightWord(node: any, id: string) {
+        onHighlightWord(node, id) {
           node.properties.className = ['word']
         },
       }]

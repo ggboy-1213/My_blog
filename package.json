@@ -32,13 +32,6 @@
     "feed": "^4.2.2",
     "next-themes": "^0.2.1",
     "nprogress": "^0.2.0",
-    "@types/nprogress": "^0.2.3",
-    "intersection-observer": "^0.12.2",
-    "react-intersection-observer": "^9.5.3",
-    "react-tsparticles": "^2.12.2",
-    "tsparticles": "^2.12.0",
-    "vanilla-tilt": "^1.8.1",
-    "@types/vanilla-tilt": "^1.8.4",
     "clsx": "^2.0.0",
     "tailwind-merge": "^2.0.0"
   },

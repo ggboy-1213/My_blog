@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react'
 import NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
 
 // 配置 NProgress 样式
 NProgress.configure({
@@ -19,23 +18,10 @@ export function ProgressBar() {
 
     // 页面加载完成
     const handleLoad = () => {
-      NProgress.done()
-    }
-
-    // 路由变化监听
-    const handleRouteStart = () => {
-      NProgress.start()
-    }
-
-    const handleRouteDone = () => {
-      NProgress.done()
+      setTimeout(() => NProgress.done(), 100)
     }
 
     window.addEventListener('load', handleLoad)
-
-    // Next.js 路由事件
-    ;(window as any).__N_PROGRESS_START = handleRouteStart
-    ;(window as any).__N_PROGRESS_DONE = handleRouteDone
 
     return () => {
       window.removeEventListener('load', handleLoad)
