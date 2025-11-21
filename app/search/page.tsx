@@ -3,9 +3,21 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Search, Calendar, Clock, Tag, ArrowLeft } from 'lucide-react'
-import { searchPosts, type Post } from '@/lib/posts'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+
+interface Post {
+  slug: string
+  title: string
+  description: string
+  date: string
+  author: string
+  tags: string[]
+  pinned: boolean
+  cover?: string
+  readingTime: string
+  content: string
+}
 
 export default function SearchPage() {
   const [query, setQuery] = useState('')
@@ -15,10 +27,17 @@ export default function SearchPage() {
   useEffect(() => {
     if (query.trim()) {
       setIsSearching(true)
-      const timer = setTimeout(() => {
-        const searchResults = searchPosts(query)
-        setResults(searchResults)
-        setIsSearching(false)
+      const timer = setTimeout(async () => {
+        try {
+          const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`)
+          const data = await response.json()
+          setResults(data.posts || [])
+        } catch (error) {
+          console.error('Search error:', error)
+          setResults([])
+        } finally {
+          setIsSearching(false)
+        }
       }, 300)
 
       return () => clearTimeout(timer)
