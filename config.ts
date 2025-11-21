@@ -1,9 +1,12 @@
 export const siteConfig = {
   // Basic info
-  title: 'My Digital Garden',
-  author: 'Anonymous',
-  description: '记录技术、设计与生活',
-  url: 'https://your-domain.vercel.app',
+  title: 'console.log(‘生活’) ｜ 输出全是 undefined',
+  author: '帅帅的关关',
+  description:
+    'print(life.meaning) 输出全是 None，偶尔抛 Exception；\n' +
+    '调试人生三件套：重启、重装、重开。\n' +
+    '若仍报错，请重启产品经理',
+  url: 'https://myblogcopy-d202z6sp7-gdys-projects-1a0394ee.vercel.app/',
 
   // Theme colors
   primaryColor: '#0ea5e9',
@@ -11,9 +14,9 @@ export const siteConfig = {
 
   // Social links
   social: {
-    github: 'https://github.com/yourusername',
+    github: 'https://github.com/ggboy-1213/',
     twitter: 'https://twitter.com/yourusername',
-    email: 'your.email@example.com',
+    email: '1159116264@qq.com',
   },
 
   // Giscus configuration
