@@ -15,6 +15,7 @@ const inter = Inter({
 })
 
 export const metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: siteConfig.title,
     template: `%s | ${siteConfig.author}`,
@@ -30,7 +31,7 @@ export const metadata = {
     siteName: siteConfig.title,
     images: [
       {
-        url: `${siteConfig.url}/og`,
+        url: siteConfig.ogImage,
         width: 1200,
         height: 630,
         alt: siteConfig.title,
@@ -43,7 +44,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: siteConfig.title,
     description: siteConfig.description,
-    images: [`${siteConfig.url}/og`],
+    images: [siteConfig.ogImage],
     creator: '@yourusername',
   },
   robots: {
