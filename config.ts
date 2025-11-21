@@ -1,6 +1,6 @@
 export const siteConfig = {
   // Basic info
-  title: 'console.log(‘生活’) ｜ 输出全是 undefined',
+  title: '救助中心 ｜ 每 print 一根头发',
   author: '帅帅的关关',
   description:
     'print(life.meaning) 输出全是 None，偶尔抛 Exception；\n' +
