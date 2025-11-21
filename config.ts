@@ -41,5 +41,5 @@ export const siteConfig = {
 
   // SEO
   ogImage: '/og-image.png',
-  keywords: ['blog', '技术', '设计', '生活', '编程'],
+  keywords: ['博客', '编程', '调试', '生活感悟', '技术', 'print', 'Exception', '重启人生'],
 }

@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import readingTime from 'reading-time'
+import { siteConfig } from '@/config'
 import { type Post } from '@/types/post'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -56,8 +57,8 @@ export default function HomePage() {
           <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             My Digital Garden
           </h1>
-          <p className="text-xl text-muted-foreground mb-8">
-            记录技术、设计与生活
+          <p className="text-xl text-muted-foreground mb-8 whitespace-pre-line">
+            {siteConfig.description}
           </p>
         </div>
 
