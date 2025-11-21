@@ -1,0 +1,277 @@
+---
+title: "Next.js 14 最佳实践指南"
+description: "分享我在使用 Next.js 14 开发过程中总结的最佳实践，包括性能优化、代码组织、SEO等方面。"
+date: "2024-01-15"
+author: "Anonymous"
+tags: ["Next.js", "React", "前端开发", "最佳实践"]
+cover: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=1200&h=630&fit=crop&crop=entropy&auto=format"
+---
+
+# Next.js 14 最佳实践指南
+
+Next.js 14 带来了许多令人兴奋的特性，在这篇文章中，我将分享一些最佳实践。
+
+## 1. App Router 的使用
+
+### 正确的路由结构
+```
+app/
+├── layout.tsx          # 根布局
+├── page.tsx           # 首页
+├── loading.tsx        # 加载状态
+├── error.tsx          # 错误处理
+├── not-found.tsx      # 404页面
+└── posts/
+    ├── layout.tsx
+    ├── page.tsx
+    └── [slug]/
+        ├── page.tsx
+        └── loading.tsx
+```
+
+### 使用 Server Components
+```tsx
+// 默认是 Server Component
+async function PostList() {
+  const posts = await getPosts()
+
+  return (
+    <div>
+      {posts.map(post => (
+        <PostCard key={post.id} post={post} />
+      ))}
+    </div>
+  )
+}
+```
+
+## 2. 性能优化
+
+### 图片优化
+```tsx
+import Image from 'next/image'
+
+function OptimizedImage({ src, alt }) {
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      width={800}
+      height={400}
+      placeholder="blur"
+      blurDataURL="data:image/jpeg;base64,..."
+      priority={false}
+    />
+  )
+}
+```
+
+### 动态导入
+```tsx
+import dynamic from 'next/dynamic'
+
+const DynamicComponent = dynamic(
+  () => import('../components/HeavyComponent'),
+  {
+    loading: () => <p>Loading...</p>,
+    ssr: false
+  }
+)
+```
+
+### 缓存策略
+```tsx
+// 数据缓存
+async function getPosts() {
+  const res = await fetch('https://api.example.com/posts', {
+    next: { revalidate: 3600 } // 1小时缓存
+  })
+  return res.json()
+}
+
+// 全局缓存
+export const revalidate = 3600
+```
+
+## 3. SEO 最佳实践
+
+### Metadata 配置
+```tsx
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'My Blog',
+  description: 'A blog about web development',
+  keywords: ['blog', 'web development', 'next.js'],
+  openGraph: {
+    title: 'My Blog',
+    description: 'A blog about web development',
+    images: ['/og-image.jpg']
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'My Blog',
+    description: 'A blog about web development'
+  }
+}
+```
+
+### 动态 Metadata
+```tsx
+export async function generateMetadata({ params }): Promise<Metadata> {
+  const post = await getPost(params.slug)
+
+  return {
+    title: post.title,
+    description: post.description,
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      images: [post.coverImage]
+    }
+  }
+}
+```
+
+## 4. 状态管理
+
+### 使用 Server State
+```tsx
+// 在 Server Component 中获取数据
+async function UserProfile({ userId }) {
+  const user = await getUser(userId)
+
+  return <div>{user.name}</div>
+}
+```
+
+### Client State 管理
+```tsx
+'use client'
+
+import { useState, useEffect } from 'react'
+
+function Counter() {
+  const [count, setCount] = useState(0)
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>
+        Increment
+      </button>
+    </div>
+  )
+}
+```
+
+## 5. 错误处理
+
+### 错误边界
+```tsx
+// error.tsx
+'use client'
+
+export default function Error({
+  error,
+  reset
+}: {
+  error: Error
+  reset: () => void
+}) {
+  return (
+    <div>
+      <h2>Something went wrong!</h2>
+      <button onClick={reset}>Try again</button>
+    </div>
+  )
+}
+```
+
+### 全局错误处理
+```tsx
+// global-error.tsx
+export default function GlobalError({
+  error,
+  reset
+}: {
+  error: Error
+  reset: () => void
+}) {
+  return (
+    <html>
+      <body>
+        <h2>Something went wrong!</h2>
+        <button onClick={reset}>Try again</button>
+      </body>
+    </html>
+  )
+}
+```
+
+## 6. 类型安全
+
+### TypeScript 配置
+```json
+{
+  "compilerOptions": {
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
+  }
+}
+```
+
+### 类型定义
+```tsx
+interface Post {
+  id: string
+  title: string
+  content: string
+  publishedAt: Date
+}
+
+async function getPost(id: string): Promise<Post> {
+  const res = await fetch(`/api/posts/${id}`)
+  return res.json()
+}
+```
+
+## 7. 部署优化
+
+### 环境变量
+```bash
+# .env.local
+DATABASE_URL="postgresql://..."
+NEXTAUTH_SECRET="..."
+NEXTAUTH_URL="http://localhost:3000"
+```
+
+### 构建优化
+```json
+{
+  "scripts": {
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
+  }
+}
+```
+
+## 总结
+
+这些最佳实践能够帮助你：
+
+1. **提升性能** - 通过代码分割、缓存策略等
+2. **改善用户体验** - 通过加载状态、错误处理等
+3. **优化 SEO** - 通过正确的 metadata 配置
+4. **提高代码质量** - 通过类型安全、错误处理等
+
+记住，最佳实践会随着版本更新而变化，保持学习是最重要的！
+
+---
+
+你觉得这些最佳实践有用吗？有什么补充或疑问欢迎在评论区讨论！
